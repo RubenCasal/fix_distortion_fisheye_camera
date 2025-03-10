@@ -100,41 +100,64 @@ In RViz2:
 ## 🛠 How Fisheye Distortion Correction Works
 
 ### 🔹 What is Fisheye Distortion?
-Fisheye lenses provide an **ultra-wide field of view**, but they introduce significant **radial distortion**.  
-Objects near the edges appear **curved instead of straight**.
+Fisheye lenses provide an **ultra-wide field of view**, often exceeding **180°**, making them useful for robotics, drones, and SLAM applications. However, they introduce **radial distortion**, causing straight lines to appear **curved**, especially toward the image edges.  
 
-### 1️⃣ Defisheye Distortion Correction
-Fisheye distortion correction uses **mathematical transformations** to remap pixels to their correct positions.
+This distortion can negatively impact:
+- **Computer Vision Algorithms** (e.g., object detection, feature matching).  
+- **Localization & Mapping** (e.g., SLAM, 3D reconstruction).  
+- **Navigation** (e.g., obstacle avoidance in autonomous systems).  
+
+To ensure **accurate scene perception**, we must **correct fisheye distortion** before processing images.
+
+### 🔹 How Fisheye Distortion Correction Works
+Fisheye distortion correction involves remapping pixels to **remove radial distortion**, effectively "straightening" curved edges.  
+This transformation is achieved using **intrinsic camera parameters**, which model the lens distortion.  
 
 #### 🔹 Steps in the Correction Process
 - **Camera Calibration**  
-  - Uses **intrinsic parameters** such as focal length and distortion coefficients.  
-  - OpenCV's `cv2.undistort()` function applies these parameters to **straighten lines**.  
+  - The camera is **calibrated** using a known pattern (e.g., a chessboard).  
+  - Intrinsic parameters, such as **focal length, principal point, and distortion coefficients**, are estimated.  
+  - These parameters are then used to compute a **correction transformation matrix**.  
 
 - **Remapping Pixels**  
-  - Computes the **transformation matrix**.  
-  - Corrects each pixel using **lookup tables**.  
+  - Each pixel is mapped to its **corrected position** based on the transformation matrix.  
+  - OpenCV's `cv2.undistort()` function applies this remapping, reducing curvature.  
+  - Lookup tables ensure fast and efficient correction.  
 
 - **Generating an Undistorted Image**  
-  - Pixels are repositioned using **`cv2.remap()`**.  
-  - Produces a **corrected image with straight lines**.  
+  - The corrected image is reconstructed using **`cv2.remap()`**.  
+  - Straight lines remain straight, making the image **more suitable for further processing** in robotics, SLAM, and computer vision tasks.  
 
 ---
 
 ## 🛠 How Rectilinear Projection Works
 
 ### 🔹 Why Rectilinear Projection?
-While **distortion correction** removes bending effects, **rectilinear projection** goes further by transforming the **spherical fisheye view into a flat perspective view**.
+Fisheye distortion correction only **removes radial distortion** but does not change the **perspective of the image**.  
+In many cases, we need to go further and **convert the fisheye view into a normal-looking image**—a process known as **rectilinear projection**.  
 
-### 2️⃣ Rectilinear Projection Process
+This is important because:
+- Fisheye images **compress distant objects**, making measurements inaccurate.  
+- Many **computer vision algorithms** assume images come from **pinhole cameras** (not fisheye).  
+- SLAM and mapping require **undistorted, perspective-correct images** for feature tracking.  
+
+### 🔹 How Rectilinear Projection Works
+Rectilinear projection **transforms the curved fisheye image into a standard pinhole camera view** by **mapping spherical coordinates to Cartesian coordinates**.
+
+#### 🔹 Steps in the Projection Process
 - **Convert Fisheye Image to Polar Coordinates**  
-  - Fisheye images capture a **spherical perspective**.  
-  - Uses **polar coordinate transformation** (`r, θ` instead of `x, y`).  
+  - The fisheye image represents a **spherical perspective**.  
+  - Each pixel is converted to **polar coordinates** (`r, θ`) instead of traditional `(x, y)`.  
 
 - **Reproject to Cartesian Space**  
-  - The fisheye image is **unwrapped into a flat view**.  
-  - Helps robots interpret real-world **shapes more accurately**.  
+  - The **spherical projection is "unwrapped" into a flat, rectilinear image**.  
+  - This ensures objects appear **proportionally correct**, eliminating fisheye warping.  
 
 - **Interpolation & Final Projection**  
+  - Since pixel positions are now **non-uniform**, interpolation (bilinear or bicubic) is applied for a smooth transformation.  
+  - The final result is a **normal-looking image**, similar to what a regular **pinhole camera** would capture.  
+
+This transformation is critical for **SLAM, 3D reconstruction, and visual perception in robotics**, where **accurate spatial representation** is essential.  
+
   - Uses **bilinear interpolation** to preserve quality.  
   - Produces a **normal-looking image** similar to a **pinhole camera**.  
