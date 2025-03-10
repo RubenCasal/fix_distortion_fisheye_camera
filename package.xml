@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>fix_distortion_fisheye_camera</name>  
+  <version>0.0.1</version>
+  <description>ROS2 package for T265 with both C++ and Python nodes</description>
+  <maintainer email="e.ruben.casal@gmail.com">Ruben Casal</maintainer>
+  <license>MIT</license>
+
+  <!-- Build tools -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
+
+  <!-- Dependencies -->
+  <depend>rclcpp</depend>
+  <depend>rclpy</depend>
+  <depend>sensor_msgs</depend>
+  <depend>cv_bridge</depend>
+  <depend>vision_opencv</depend>
+  <depend>opencv</depend>
+  <depend>nav_msgs</depend>
+  <depend>tf2_msgs</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+  <depend>tf2_geometry_msgs</depend>
+  <depend>tf2_sensor_msgs</depend>
+
+  <exec_depend>launch</exec_depend>
+  <exec_depend>ros2launch</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
