@@ -95,3 +95,44 @@ In RViz2:
         /rs_t265/undistorted → Image (fisheye distortion correction result)
         /rs_t265/defisheye_rectiliniar_projection_node → Image (rectilinear projection result)
         /tf → TF (transform visualization)
+
+
+## 🛠 How Fisheye Distortion Correction Works
+🔹 What is Fisheye Distortion?
+
+Fisheye lenses provide an ultra-wide field of view, but they introduce significant radial distortion.
+Objects near the edges appear curved instead of straight.
+### 1️⃣ Defisheye Distortion Correction
+
+Fisheye distortion correction uses mathematical transformations to remap pixels to their correct positions.
+🔹 Steps in the Correction Process
+
+    Camera Calibration:
+        Uses intrinsic parameters such as focal length and distortion coefficients.
+        OpenCV's cv2.undistort() function applies these parameters to straighten lines.
+
+    Remapping Pixels:
+        Computes the transformation matrix.
+        Corrects each pixel using lookup tables.
+
+    Generating an Undistorted Image:
+        Pixels are repositioned using cv2.remap().
+        Produces a corrected image with straight lines.
+
+🛠 How Rectilinear Projection Works
+🔹 Why Rectilinear Projection?
+
+While distortion correction removes bending effects, rectilinear projection goes further by transforming the spherical fisheye view into a flat perspective view.
+### 2️⃣ Rectilinear Projection Process
+
+    Convert Fisheye Image to Polar Coordinates
+        Fisheye images capture a spherical perspective.
+        Uses polar coordinate transformation (r, θ instead of x, y).
+
+    Reproject to Cartesian Space
+        The fisheye image is unwrapped into a flat view.
+        This helps robots interpret real-world shapes more accurately.
+
+    Interpolation & Final Projection
+        Uses bilinear interpolation to preserve quality.
+        Produces a normal-looking image similar to a pinhole camera.
