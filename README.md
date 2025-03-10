@@ -12,7 +12,7 @@ This **ROS2 package** processes **fisheye images from the Intel RealSense T265**
   - `defisheye_rectiliniar_projection.py`: Projects the fisheye image into **rectilinear space**.  
 - **Launch Files**: Automatically start the necessary nodes.
 
-![Fisheye Distortion Correction](fisheye_correction.gif)
+![Fisheye Distortion Correction](defisheye.gif)
 
 ---
 
