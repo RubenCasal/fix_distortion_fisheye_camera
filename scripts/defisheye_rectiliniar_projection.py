@@ -45,6 +45,8 @@ class DefisheyeRectiliniarProjectionNode(Node):
         theta = -1.0 * x / maxmag
         mag = maxmag - y
 
+        mag = np.power(mag/maxmag,1.3) *maxmag
+
         # Compute the corresponding target coordinates
         targety = np.rint(midy + mag * np.cos(theta)).astype(int)
         targetx = np.rint(midx + mag * np.sin(theta)).astype(int)
