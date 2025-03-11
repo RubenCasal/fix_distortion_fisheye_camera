@@ -60,7 +60,7 @@ ament_python_install_package(${PROJECT_NAME})
 # Install Python executables (scripts)
 install(PROGRAMS
   scripts/defisheye_fix_distortion.py
-  scripts/defisheye_rectiliniar_projection.py
+  scripts/defisheye_rectilinear_projection.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

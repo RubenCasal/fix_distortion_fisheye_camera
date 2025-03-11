@@ -15,9 +15,9 @@ launch_ros.actions.Node(
        
         launch_ros.actions.Node(
             package='fix_distortion_fisheye_camera',
-            executable='defisheye_rectiliniar_projection.py',  
+            executable='defisheye_rectilinear_projection.py',  
             output='screen',
             parameters=[],
-            arguments=[os.path.join(os.getenv('ROS_WS', '/home/rcasal/ros2_ws'), 'install/fix_distortion_fisheye_camera/lib/fix_distortion_fisheye_camera/defisheye_rectiliniar_projection.py')]
+            arguments=[os.path.join(os.getenv('ROS_WS', '/home/rcasal/ros2_ws'), 'install/fix_distortion_fisheye_camera/lib/fix_distortion_fisheye_camera/defisheye_rectilinear_projection.py')]
         ),
     ])
