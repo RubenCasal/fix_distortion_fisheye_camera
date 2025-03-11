@@ -12,11 +12,6 @@ This **ROS2 package** processes **fisheye images from the Intel RealSense T265**
   - `defisheye_rectiliniar_projection.py`: Projects the fisheye image into **rectilinear space**.  
 - **Launch Files**: Automatically start the necessary nodes.
 
-### Fix Fisheye Distortion
-![Fisheye Distortion Correction](defisheye.gif)
-
-### Rectilinear Projection
-![Fisheye Distortion Correction](rectangular.gif)
 
 ---
 
@@ -103,6 +98,8 @@ In RViz2:
 
 ## 🛠 How Fisheye Distortion Correction Works
 
+![Fisheye Distortion Correction](defisheye.gif)
+
 ### 🔹 What is Fisheye Distortion?
 Fisheye lenses provide an **ultra-wide field of view**, often exceeding **180°**, making them useful for robotics, drones, and SLAM applications. However, they introduce **radial distortion**, causing straight lines to appear **curved**, especially toward the image edges.  
 
@@ -136,6 +133,7 @@ This transformation is achieved using **intrinsic camera parameters**, which mod
 
 ## 🛠 How Rectilinear Projection Works
 
+![Fisheye Distortion Correction](rectangular.gif)
 ### 🔹 Why Rectilinear Projection?
 Fisheye distortion correction only **removes radial distortion** but does not change the **perspective of the image**.  
 In many cases, we need to go further and **convert the fisheye view into a normal-looking image**—a process known as **rectilinear projection**.  
